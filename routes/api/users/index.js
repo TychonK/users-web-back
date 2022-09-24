@@ -1,13 +1,15 @@
 import { Router } from 'express'
 
 import { validateId } from './validation'
-import { listUsers, blockUsers, unblockUsers, removeUsers } from '../../../controllers/users'
+import { listOne, listUsers, blockUsers, unblockUsers, removeUsers } from '../../../controllers/users'
 
 import guard from '../../../middlewares/guard' 
 
 const router = new Router()
 
 router.get('/', guard, listUsers)
+
+router.get('/current', guard, listOne)
 
 router.patch('/block', [guard, validateId], blockUsers)
 

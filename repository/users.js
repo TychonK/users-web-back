@@ -4,6 +4,11 @@ const listUsers = async () => {
   return await User.find()
 }
 
+const listOne = async (token) => {
+  console.log(token)
+  return await User.findOne({ 'token': token })
+}
+
 const blockUsers = async (usersId) => {
   const result = await User.updateMany(
     {
@@ -32,6 +37,7 @@ const removeUsers = async (usersId) => {
 
 export default {
   listUsers,
+  listOne,
   blockUsers,
   unblockUsers,
   removeUsers
