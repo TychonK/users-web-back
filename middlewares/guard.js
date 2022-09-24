@@ -20,10 +20,13 @@ const guard = async (req, res, next) => {
     }
     const payload = jwt.decode(token)
     const user = await repositoryUsers.findById(payload.id)
+    if (!user) {
+        return  res.status(HttpCode.UNAUTHORIZED).json({status: 'error', code: HttpCode.UNAUTHORIZED, message: 'Not authorized'})
+    }
     if (!user.active) {
         return res.status(HttpCode.UNAUTHORIZED).json({status: 'error', code: HttpCode.UNAUTHORIZED, message: 'You have been bloooocked hahaha!'})
     }
-    if (!user || user.token != token) {
+    if (user.token != token) {
         return res.status(HttpCode.UNAUTHORIZED).json({status: 'error', code: HttpCode.UNAUTHORIZED, message: 'Not authorized'})
     }
     req.user = user
