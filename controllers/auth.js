@@ -28,7 +28,17 @@ const login = async (req, res, next) => {
     const token = authService.getToken(user)
     await authService.setToken(user.id, token)
     await authService.setTimeLogged(user.id, Date.now())
-    res.status(HttpCode.OK).json({ status: 'OK', code: HttpCode.OK, data: { token }})
+
+    res.status(HttpCode.OK).json({
+        status: 'OK', code: HttpCode.OK, data:
+        {
+            token,
+            user: {
+                name: user.name,
+                email: user.email,
+            }
+        }
+    })
 }
 
 const logout = async (req, res, next) => {
